@@ -36,3 +36,28 @@
     padding: 20px;
     border-radius: 10px;
 }
+
+.buytickets .screens .screen{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.35 ease;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .buytickets .screens .screen:last-child{
+        border-bottom: none;
+    }
+
+    .buytickets .screens .screen h2{
+        font-size: 20px;
+        font-weight: 600;
+    }
+        
+    .buytickets .screens .screen h3{
+        font-size: 15px;
+        font-weight: 600;
+    }
