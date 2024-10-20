@@ -1,5 +1,7 @@
 "use client"
 import React from 'react'
+import './SelectSeat.css'
+import Link from 'next/link';
 
 const page = () => {
 
@@ -2098,19 +2100,23 @@ const page = () => {
                                                     <div key={seatIndex}>
                                                         {
                                                             seat.status == 'available' &&
-                                                            <span className='seat-available'>
+                                                            <span className={
+                                                                selectedSeats.find((s: any) => {
+                                                                    return s.row === row.rowname && s.seat_id === seat.seat_id && s.col === colIndex
+                                                                }) ? "seat-selected" : "seat-available"
+                                                            }
+                                                            onClick={() => selectedselectSeat({
+                                                                row: row.rowname,
+                                                                col: colIndex,
+                                                                seat_id: seat.seat_id,
+                                                                price: seatType.price 
+                                                            })}>
                                                                 {seatIndex+1}
                                                             </span>
                                                         }
                                                         {
                                                             seat.status == 'not-available' &&
-                                                            <span className='seat-not-available'>
-                                                                {seatIndex+1}
-                                                            </span>
-                                                        }
-                                                        {
-                                                            seat.status == 'available' &&
-                                                            <span>
+                                                            <span className='seat-unavailable'>
                                                                 {seatIndex+1}
                                                             </span>
                                                         }
@@ -2129,6 +2135,22 @@ const page = () => {
     }
         
     const [selectedTime, setSelectedTime] = React.useState<any>(screen.timeslots[0])
+
+    const[selectedSeats, setselectedSeats] = React.useState<any[]>([])
+
+    const selectedselectSeat = (seat: any) => {
+        console.log(seat)
+        const isselected = selectedSeats.findIndex((s:any) => {
+            return s.row === seat.row && s.col === seat.col && s.seat_id === seat.seat_id 
+        })
+
+        if(isselected) {
+            setselectedSeats(selectedSeats.filter((s: any) => s.seat_id !== seat.seat_id))
+        }else{
+            setselectedSeats([...selectedSeats, seat])
+            
+        }
+    }
 
   return (
     <div className='selectseatpage'>
@@ -2161,7 +2183,7 @@ const page = () => {
                 </div>
                 <div>
                     <span className='seat-available'></span>
-                    <p>Not available</p>
+                    <p>Available</p>
                 </div>
                 <div>
                     <span className='seat-selected'></span>
